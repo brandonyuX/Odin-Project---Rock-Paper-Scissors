@@ -1,17 +1,18 @@
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
     computerSelection = computerSelection.toLowerCase();
+    const result = document.querySelector('#result');
 
     if (playerSelection === computerSelection) {
-        return "It's a tie!";
+        result.textContent = "Tie";
     } else if (
         (playerSelection === "rock" && computerSelection === "scissors") ||
         (playerSelection === "scissors" && computerSelection === "paper") ||
         (playerSelection === "paper" && computerSelection === "rock")
     ) {
-        return `You win! ${playerSelection} beats ${computerSelection}.`;
+        result.textContent = "You";;
     } else {
-        return `You lose! ${computerSelection} beats ${playerSelection}.`;
+        result.textContent = "PC";;
     }
 }
 
@@ -21,13 +22,22 @@ function computerPlay() {
     return choices[randomIndex];
 }
 
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt("Enter your choice (Rock, Paper, or Scissors):");
-        const computerSelection = computerPlay();
-        console.log(playRound(playerSelection, computerSelection));
-    }
-}
 
-// Start the game
-playGame();
+const selection = document.querySelectorAll('button')
+
+selection.forEach(button => {
+    let playerSelection = ''
+    button.addEventListener('click', function () {
+        const computerSelection = computerPlay();
+        if (button.id === 'rock') {
+            playerSelection = 'Rock';
+        }
+        else if (button.id === 'paper') {
+            playerSelection = 'Paper';
+        }
+        else if (button.id === 'scissors') {
+            playerSelection = 'Scissors';
+        }
+        playRound(playerSelection, computerSelection);
+    });
+})
